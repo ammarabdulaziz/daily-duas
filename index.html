@@ -214,6 +214,10 @@
         min-width: 0;
       }
 
+      .dua-header > * {
+        min-width: 0;
+      }
+
       .dua-badge {
         display: inline-flex;
         align-items: center;
@@ -236,13 +240,15 @@
         font-size: 0.74rem;
         font-weight: 600;
         white-space: nowrap;
+        max-width: 100%;
       }
 
       .dua-title {
         margin: 10px 0 0;
         font-size: clamp(1.05rem, 2.3vw, 1.34rem);
         line-height: 1.34;
-        overflow-wrap: break-word;
+        overflow-wrap: anywhere;
+        word-break: break-word;
       }
 
       .arabic-wrap {
@@ -380,22 +386,30 @@
         justify-content: space-between;
         align-items: center;
         gap: 10px;
+        min-width: 0;
       }
 
       .indicator {
         font-size: 0.88rem;
         color: var(--muted);
         font-weight: 600;
+        flex: 0 0 auto;
       }
 
       .current-title {
+        flex: 1 1 auto;
         font-size: 0.78rem;
         color: #4f5f58;
         text-align: right;
-        white-space: nowrap;
+        white-space: normal;
         overflow: hidden;
+        overflow-wrap: anywhere;
+        word-break: break-word;
         text-overflow: ellipsis;
-        max-width: 70%;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        line-clamp: 2;
         min-width: 0;
       }
 
@@ -425,7 +439,37 @@
         }
 
         .current-title {
-          max-width: 62%;
+          font-size: 0.75rem;
+        }
+      }
+
+      @media (max-width: 430px) {
+        .dua-card {
+          padding: 12px;
+        }
+
+        .arabic-wrap,
+        .content-block,
+        .meta-item {
+          max-width: 100%;
+        }
+
+        .recite-pill {
+          white-space: normal;
+          overflow-wrap: anywhere;
+        }
+
+        .dua-title,
+        .arabic,
+        .value {
+          overflow-wrap: anywhere;
+          word-break: break-word;
+          max-width: 100%;
+        }
+
+        .arabic {
+          font-size: clamp(1.3rem, 7vw, 1.7rem);
+          line-height: 1.7;
         }
       }
 
