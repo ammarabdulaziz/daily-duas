@@ -1,716 +1,718 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#0d6e57" />
-    <meta name="description" content="Daily duas in a modern swipeable carousel." />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Daily Duas" />
-    <title>Daily Duas</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;600;700&family=Sora:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d6e57" />
+  <meta name="description" content="Daily duas in a modern swipeable carousel." />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Daily Duas" />
+  <title>Daily Duas</title>
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="apple-touch-icon" href="icon.png" />
 
-    <style>
-      :root {
-        --bg: #f7f4eb;
-        --surface: #fffdf8;
-        --surface-soft: #f4f9f6;
-        --line: #d7e4dc;
-        --text: #1a2a24;
-        --muted: #5d6f66;
-        --brand: #0d6e57;
-        --brand-strong: #085645;
-        --brand-soft: #d8ece4;
-        --accent: #b18545;
-        --warn: #8e3030;
-        --radius-lg: 24px;
-        --radius-md: 18px;
-        --radius-sm: 12px;
-        --shadow-soft: 0 18px 38px rgba(14, 42, 33, 0.12);
-      }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;600;700&family=Sora:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
 
-      * {
-        box-sizing: border-box;
-      }
+  <style>
+    :root {
+      --bg: #f7f4eb;
+      --surface: #fffdf8;
+      --surface-soft: #f4f9f6;
+      --line: #d7e4dc;
+      --text: #1a2a24;
+      --muted: #5d6f66;
+      --brand: #0d6e57;
+      --brand-strong: #085645;
+      --brand-soft: #d8ece4;
+      --accent: #b18545;
+      --warn: #8e3030;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --shadow-soft: 0 18px 38px rgba(14, 42, 33, 0.12);
+    }
 
-      html,
-      body {
-        margin: 0;
-        min-height: 100%;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      body {
-        font-family: "Sora", "Segoe UI", sans-serif;
-        color: var(--text);
-        overflow: hidden;
-        background:
-          radial-gradient(1000px 580px at -12% -22%, rgba(13, 110, 87, 0.22), transparent 56%),
-          radial-gradient(760px 540px at 112% -14%, rgba(177, 133, 69, 0.18), transparent 55%),
-          conic-gradient(
-            from 140deg at 22% 14%,
-            rgba(13, 110, 87, 0.06),
-            rgba(13, 110, 87, 0),
-            rgba(177, 133, 69, 0.06),
-            rgba(13, 110, 87, 0.04),
-            rgba(13, 110, 87, 0.06)
-          ),
-          var(--bg);
-      }
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
 
-      .app {
-        height: 100dvh;
-        min-height: 100svh;
-        max-width: 980px;
-        margin: 0 auto;
-        padding: clamp(12px, 2vw, 20px);
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        gap: clamp(10px, 2vw, 16px);
-        overflow: hidden;
-        animation: app-in 500ms ease-out;
-      }
+    body {
+      font-family: "Sora", "Segoe UI", sans-serif;
+      color: var(--text);
+      overflow: hidden;
+      background:
+        radial-gradient(1000px 580px at -12% -22%, rgba(13, 110, 87, 0.22), transparent 56%),
+        radial-gradient(760px 540px at 112% -14%, rgba(177, 133, 69, 0.18), transparent 55%),
+        conic-gradient(from 140deg at 22% 14%,
+          rgba(13, 110, 87, 0.06),
+          rgba(13, 110, 87, 0),
+          rgba(177, 133, 69, 0.06),
+          rgba(13, 110, 87, 0.04),
+          rgba(13, 110, 87, 0.06)),
+        var(--bg);
+    }
 
-      .app-header {
-        border-radius: var(--radius-lg);
-        border: 1px solid rgba(255, 255, 255, 0.65);
-        background:
-          linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(238, 247, 241, 0.8)),
-          linear-gradient(180deg, rgba(13, 110, 87, 0.06), rgba(177, 133, 69, 0.06));
-        backdrop-filter: blur(8px);
-        box-shadow: var(--shadow-soft);
-        padding: clamp(14px, 2.4vw, 20px);
-      }
+    .app {
+      height: 100dvh;
+      min-height: 100svh;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: clamp(12px, 2vw, 20px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: clamp(10px, 2vw, 16px);
+      overflow: hidden;
+      animation: app-in 500ms ease-out;
+    }
 
-      .brand-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-      }
+    .app-header {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(238, 247, 241, 0.8)),
+        linear-gradient(180deg, rgba(13, 110, 87, 0.06), rgba(177, 133, 69, 0.06));
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow-soft);
+      padding: clamp(14px, 2.4vw, 20px);
+    }
 
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 11px;
-      }
+    .brand-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
 
-      .brand-mark {
-        width: 38px;
-        height: 38px;
-        border-radius: 12px;
-        display: grid;
-        place-items: center;
-        background: linear-gradient(160deg, var(--brand), var(--brand-strong));
-        color: #fff;
-        box-shadow: 0 10px 20px rgba(8, 86, 69, 0.25);
-        font-weight: 700;
-      }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
 
-      .brand h1 {
-        margin: 0;
-        font-size: clamp(1.2rem, 2.4vw, 1.65rem);
-        letter-spacing: 0.01em;
-      }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(160deg, var(--brand), var(--brand-strong));
+      color: #fff;
+      box-shadow: 0 10px 20px rgba(8, 86, 69, 0.25);
+      font-weight: 700;
+    }
 
-      .brand p {
-        margin: 2px 0 0;
-        color: var(--muted);
-        font-size: clamp(0.78rem, 1.8vw, 0.9rem);
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+      letter-spacing: 0.01em;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: clamp(0.78rem, 1.8vw, 0.9rem);
+    }
+
+    .hint-pill {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(13, 110, 87, 0.22);
+      color: var(--brand-strong);
+      font-size: 0.77rem;
+      font-weight: 600;
+      background: rgba(216, 236, 228, 0.6);
+    }
+
+    .app-main {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 10px;
+    }
+
+    .carousel-frame {
+      min-height: 0;
+      height: 100%;
+      max-height: 100%;
+      overflow: hidden;
+      border-radius: calc(var(--radius-lg) + 2px);
+      border: 1px solid rgba(13, 110, 87, 0.16);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(244, 249, 246, 0.9));
+      box-shadow: var(--shadow-soft);
+      touch-action: pan-y;
+      cursor: grab;
+    }
+
+    .carousel-frame:active {
+      cursor: grabbing;
+    }
+
+    .carousel-track {
+      height: 100%;
+      display: flex;
+      transition: transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
+      will-change: transform;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      padding: clamp(10px, 2.4vw, 18px);
+      display: flex;
+    }
+
+    .dua-card {
+      width: min(780px, 100%);
+      height: 100%;
+      margin: 0 auto;
+      padding: clamp(14px, 2.8vw, 22px);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, var(--surface), var(--surface-soft)),
+        repeating-linear-gradient(45deg, rgba(13, 110, 87, 0.02) 0 12px, transparent 12px 32px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .dua-card::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    .dua-card:focus-visible {
+      outline: 2px solid rgba(13, 110, 87, 0.35);
+      outline-offset: 2px;
+    }
+
+    .dua-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .dua-header>* {
+      min-width: 0;
+    }
+
+    .dua-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(13, 110, 87, 0.2);
+      background: rgba(216, 236, 228, 0.56);
+      color: var(--brand-strong);
+      font-weight: 700;
+      font-size: 0.79rem;
+    }
+
+    .recite-pill {
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(177, 133, 69, 0.35);
+      background: rgba(177, 133, 69, 0.15);
+      color: #6b4d22;
+      font-size: 0.74rem;
+      font-weight: 600;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    .dua-title {
+      margin: 10px 0 0;
+      font-size: clamp(1.05rem, 2.3vw, 1.34rem);
+      line-height: 1.34;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .arabic-wrap {
+      margin-top: 14px;
+      padding: clamp(12px, 2vw, 16px);
+      border-radius: 14px;
+      border: 1px solid rgba(13, 110, 87, 0.15);
+      background:
+        radial-gradient(circle at top right, rgba(177, 133, 69, 0.14), transparent 55%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(243, 248, 244, 0.84));
+    }
+
+    .arabic {
+      margin: 0;
+      direction: rtl;
+      text-align: right;
+      font-family: "Noto Naskh Arabic", serif;
+      font-size: clamp(1.5rem, 4.2vw, 2.1rem);
+      line-height: 1.82;
+      color: #12372c;
+      white-space: normal;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+
+    .content-grid {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .content-block {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .label {
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.69rem;
+      font-weight: 700;
+      color: #567567;
+    }
+
+    .value {
+      margin: 5px 0 0;
+      line-height: 1.58;
+      font-size: clamp(0.88rem, 1.8vw, 0.96rem);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .value.transliteration {
+      font-style: italic;
+    }
+
+    .categories {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .category {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--brand-soft);
+      color: var(--brand-strong);
+      border: 1px solid rgba(13, 110, 87, 0.2);
+      font-size: 0.74rem;
+      font-weight: 600;
+    }
+
+    .meta-grid {
+      margin-top: 12px;
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .meta-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 9px 10px;
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .meta-item strong {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-size: 0.66rem;
+      color: #557466;
+    }
+
+    .meta-item span {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.86rem;
+    }
+
+    .pager {
+      display: grid;
+      gap: 8px;
+      border-radius: 16px;
+      border: 1px solid rgba(13, 110, 87, 0.14);
+      background: rgba(255, 255, 255, 0.72);
+      padding: 10px;
+    }
+
+    .progress-rail {
+      position: relative;
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(13, 110, 87, 0.14);
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--brand), #19916f 70%, var(--accent));
+      transition: width 240ms ease;
+    }
+
+    .pager-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .indicator {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 600;
+      flex: 0 0 auto;
+    }
+
+    .current-title {
+      flex: 1 1 auto;
+      font-size: 0.78rem;
+      color: #4f5f58;
+      text-align: right;
+      white-space: normal;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      min-width: 0;
+    }
+
+    .app-footer {
+      text-align: center;
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+
+    .status-card {
+      width: min(700px, 100%);
+      margin: auto;
+      text-align: center;
+    }
+
+    .status-card strong {
+      color: var(--warn);
+    }
+
+    @media (max-width: 760px) {
+      .meta-grid {
+        grid-template-columns: 1fr;
       }
 
       .hint-pill {
-        flex-shrink: 0;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 7px 10px;
-        border-radius: 999px;
-        border: 1px solid rgba(13, 110, 87, 0.22);
-        color: var(--brand-strong);
-        font-size: 0.77rem;
-        font-weight: 600;
-        background: rgba(216, 236, 228, 0.6);
-      }
-
-      .app-main {
-        min-height: 0;
-        display: grid;
-        grid-template-rows: minmax(0, 1fr) auto;
-        gap: 10px;
-      }
-
-      .carousel-frame {
-        min-height: 0;
-        height: 100%;
-        max-height: 100%;
-        overflow: hidden;
-        border-radius: calc(var(--radius-lg) + 2px);
-        border: 1px solid rgba(13, 110, 87, 0.16);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(244, 249, 246, 0.9));
-        box-shadow: var(--shadow-soft);
-        touch-action: pan-y;
-        cursor: grab;
-      }
-
-      .carousel-frame:active {
-        cursor: grabbing;
-      }
-
-      .carousel-track {
-        height: 100%;
-        display: flex;
-        transition: transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
-        will-change: transform;
-      }
-
-      .slide {
-        min-width: 100%;
-        height: 100%;
-        padding: clamp(10px, 2.4vw, 18px);
-        display: flex;
-      }
-
-      .dua-card {
-        width: min(780px, 100%);
-        height: 100%;
-        margin: 0 auto;
-        padding: clamp(14px, 2.8vw, 22px);
-        border-radius: var(--radius-md);
-        border: 1px solid var(--line);
-        background:
-          linear-gradient(180deg, var(--surface), var(--surface-soft)),
-          repeating-linear-gradient(45deg, rgba(13, 110, 87, 0.02) 0 12px, transparent 12px 32px);
-        overflow-y: auto;
-        overflow-x: hidden;
-        overscroll-behavior: contain;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-
-      .dua-card::-webkit-scrollbar {
-        width: 0;
-        height: 0;
         display: none;
       }
 
-      .dua-card:focus-visible {
-        outline: 2px solid rgba(13, 110, 87, 0.35);
-        outline-offset: 2px;
+      .current-title {
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .dua-card {
+        padding: 12px;
       }
 
-      .dua-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-        min-width: 0;
-      }
-
-      .dua-header > * {
-        min-width: 0;
-      }
-
-      .dua-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 5px 10px;
-        border-radius: 999px;
-        border: 1px solid rgba(13, 110, 87, 0.2);
-        background: rgba(216, 236, 228, 0.56);
-        color: var(--brand-strong);
-        font-weight: 700;
-        font-size: 0.79rem;
-      }
-
-      .recite-pill {
-        padding: 5px 9px;
-        border-radius: 999px;
-        border: 1px solid rgba(177, 133, 69, 0.35);
-        background: rgba(177, 133, 69, 0.15);
-        color: #6b4d22;
-        font-size: 0.74rem;
-        font-weight: 600;
-        white-space: nowrap;
+      .arabic-wrap,
+      .content-block,
+      .meta-item {
         max-width: 100%;
       }
 
-      .dua-title {
-        margin: 10px 0 0;
-        font-size: clamp(1.05rem, 2.3vw, 1.34rem);
-        line-height: 1.34;
+      .recite-pill {
+        white-space: normal;
         overflow-wrap: anywhere;
-        word-break: break-word;
       }
 
-      .arabic-wrap {
-        margin-top: 14px;
-        padding: clamp(12px, 2vw, 16px);
-        border-radius: 14px;
-        border: 1px solid rgba(13, 110, 87, 0.15);
-        background:
-          radial-gradient(circle at top right, rgba(177, 133, 69, 0.14), transparent 55%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(243, 248, 244, 0.84));
+      .dua-title,
+      .arabic,
+      .value {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        max-width: 100%;
       }
 
       .arabic {
-        margin: 0;
-        direction: rtl;
-        text-align: right;
-        font-family: "Noto Naskh Arabic", serif;
-        font-size: clamp(1.5rem, 4.2vw, 2.1rem);
-        line-height: 1.82;
-        color: #12372c;
-        white-space: normal;
-        overflow-wrap: break-word;
-        word-break: normal;
+        font-size: clamp(1.3rem, 7vw, 1.5rem);
+        line-height: 1.7;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @keyframes app-in {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
       }
 
-      .content-grid {
-        margin-top: 12px;
-        display: grid;
-        gap: 10px;
+      to {
+        opacity: 1;
+        transform: translateY(0);
       }
+    }
+  </style>
+</head>
 
-      .content-block {
-        border: 1px solid var(--line);
-        border-radius: var(--radius-sm);
-        padding: 10px 12px;
-        background: rgba(255, 255, 255, 0.7);
-      }
-
-      .label {
-        margin: 0;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        font-size: 0.69rem;
-        font-weight: 700;
-        color: #567567;
-      }
-
-      .value {
-        margin: 5px 0 0;
-        line-height: 1.58;
-        font-size: clamp(0.88rem, 1.8vw, 0.96rem);
-        overflow-wrap: break-word;
-        word-break: break-word;
-      }
-
-      .value.transliteration {
-        font-style: italic;
-      }
-
-      .categories {
-        margin-top: 12px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 7px;
-      }
-
-      .category {
-        display: inline-flex;
-        align-items: center;
-        padding: 5px 9px;
-        border-radius: 999px;
-        background: var(--brand-soft);
-        color: var(--brand-strong);
-        border: 1px solid rgba(13, 110, 87, 0.2);
-        font-size: 0.74rem;
-        font-weight: 600;
-      }
-
-      .meta-grid {
-        margin-top: 12px;
-        display: grid;
-        gap: 8px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .meta-item {
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        padding: 9px 10px;
-        background: rgba(255, 255, 255, 0.75);
-      }
-
-      .meta-item strong {
-        display: block;
-        text-transform: uppercase;
-        letter-spacing: 0.07em;
-        font-size: 0.66rem;
-        color: #557466;
-      }
-
-      .meta-item span {
-        display: block;
-        margin-top: 4px;
-        font-size: 0.86rem;
-      }
-
-      .pager {
-        display: grid;
-        gap: 8px;
-        border-radius: 16px;
-        border: 1px solid rgba(13, 110, 87, 0.14);
-        background: rgba(255, 255, 255, 0.72);
-        padding: 10px;
-      }
-
-      .progress-rail {
-        position: relative;
-        height: 8px;
-        border-radius: 999px;
-        overflow: hidden;
-        background: rgba(13, 110, 87, 0.14);
-      }
-
-      .progress-fill {
-        position: absolute;
-        inset: 0 auto 0 0;
-        width: 0;
-        border-radius: 999px;
-        background: linear-gradient(90deg, var(--brand), #19916f 70%, var(--accent));
-        transition: width 240ms ease;
-      }
-
-      .pager-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-        min-width: 0;
-      }
-
-      .indicator {
-        font-size: 0.88rem;
-        color: var(--muted);
-        font-weight: 600;
-        flex: 0 0 auto;
-      }
-
-      .current-title {
-        flex: 1 1 auto;
-        font-size: 0.78rem;
-        color: #4f5f58;
-        text-align: right;
-        white-space: normal;
-        overflow: hidden;
-        overflow-wrap: anywhere;
-        word-break: break-word;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        line-clamp: 2;
-        min-width: 0;
-      }
-
-      .app-footer {
-        text-align: center;
-        font-size: 0.76rem;
-        color: var(--muted);
-      }
-
-      .status-card {
-        width: min(700px, 100%);
-        margin: auto;
-        text-align: center;
-      }
-
-      .status-card strong {
-        color: var(--warn);
-      }
-
-      @media (max-width: 760px) {
-        .meta-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .hint-pill {
-          display: none;
-        }
-
-        .current-title {
-          font-size: 0.75rem;
-        }
-      }
-
-      @media (max-width: 430px) {
-        .dua-card {
-          padding: 12px;
-        }
-
-        .arabic-wrap,
-        .content-block,
-        .meta-item {
-          max-width: 100%;
-        }
-
-        .recite-pill {
-          white-space: normal;
-          overflow-wrap: anywhere;
-        }
-
-        .dua-title,
-        .arabic,
-        .value {
-          overflow-wrap: anywhere;
-          word-break: break-word;
-          max-width: 100%;
-        }
-
-        .arabic {
-          font-size: clamp(1.3rem, 7vw, 1.5rem);
-          line-height: 1.7;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-          animation: none !important;
-          transition: none !important;
-          scroll-behavior: auto !important;
-        }
-      }
-
-      @keyframes app-in {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="app">
-      <header class="app-header">
-        <div class="brand-row">
-          <div class="brand">
-            <div class="brand-mark" aria-hidden="true">D</div>
-            <div>
-              <h1>Daily Duas</h1>
-              <p>Swipe through the daily duas</p>
-            </div>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="brand-row">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">D</div>
+          <div>
+            <h1>Daily Duas</h1>
+            <p>Swipe through the daily duas</p>
           </div>
-          <div class="hint-pill">Swipe left or right</div>
         </div>
-      </header>
+        <div class="hint-pill">Swipe left or right</div>
+      </div>
+    </header>
 
-      <main class="app-main" aria-live="polite">
-        <section class="carousel-frame" id="carouselViewport" aria-label="Duas carousel">
-          <div class="carousel-track" id="carouselTrack">
-            <article class="slide">
-              <div class="dua-card status-card">
-                <p class="value">Loading duas...</p>
-              </div>
-            </article>
-          </div>
-        </section>
+    <main class="app-main" aria-live="polite">
+      <section class="carousel-frame" id="carouselViewport" aria-label="Duas carousel">
+        <div class="carousel-track" id="carouselTrack">
+          <article class="slide">
+            <div class="dua-card status-card">
+              <p class="value">Loading duas...</p>
+            </div>
+          </article>
+        </div>
+      </section>
 
-        <section class="pager" aria-label="Slide progress">
-          <div class="progress-rail">
-            <div class="progress-fill" id="progressFill"></div>
-          </div>
-          <div class="pager-row">
-            <div class="indicator" id="slideIndicator">0 / 0</div>
-            <div class="current-title" id="currentTitle">Waiting for duas...</div>
-          </div>
-        </section>
-      </main>
+      <section class="pager" aria-label="Slide progress">
+        <div class="progress-rail">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="pager-row">
+          <div class="indicator" id="slideIndicator">0 / 0</div>
+          <div class="current-title" id="currentTitle">Waiting for duas...</div>
+        </div>
+      </section>
+    </main>
 
-      <!-- <footer class="app-footer">Powered by local <code>duas.json</code> data.</footer> -->
-    </div>
+    <!-- <footer class="app-footer">Powered by local <code>duas.json</code> data.</footer> -->
+  </div>
 
-    <script>
-      const track = document.getElementById("carouselTrack");
-      const viewport = document.getElementById("carouselViewport");
-      const indicator = document.getElementById("slideIndicator");
-      const currentTitle = document.getElementById("currentTitle");
-      const progressFill = document.getElementById("progressFill");
+  <script>
+    const track = document.getElementById("carouselTrack");
+    const viewport = document.getElementById("carouselViewport");
+    const indicator = document.getElementById("slideIndicator");
+    const currentTitle = document.getElementById("currentTitle");
+    const progressFill = document.getElementById("progressFill");
 
-      const state = {
-        duas: [],
-        index: 0,
-        touchStartX: 0,
-        touchStartY: 0,
-        touchActive: false,
-        pointerStartX: 0,
-        pointerStartY: 0,
-        pointerActive: false,
-      };
+    const state = {
+      duas: [],
+      index: 0,
+      touchStartX: 0,
+      touchStartY: 0,
+      touchActive: false,
+      pointerStartX: 0,
+      pointerStartY: 0,
+      pointerActive: false,
+    };
 
-      function escapeHtml(value) {
-        return String(value)
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#039;");
-      }
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-      function parseCategories(raw) {
-        if (!raw) {
-          return [];
-        }
-
-        if (Array.isArray(raw)) {
-          return raw;
-        }
-
-        if (typeof raw === "string") {
-          try {
-            const parsed = JSON.parse(raw);
-            return Array.isArray(parsed) ? parsed : [raw];
-          } catch {
-            return raw
-              .split(",")
-              .map((value) => value.trim())
-              .filter(Boolean);
-          }
-        }
-
+    function parseCategories(raw) {
+      if (!raw) {
         return [];
       }
 
-      function sortDuas(a, b) {
-        const aOrder = Number.isFinite(Number(a.sort_order)) ? Number(a.sort_order) : Number.MAX_SAFE_INTEGER;
-        const bOrder = Number.isFinite(Number(b.sort_order)) ? Number(b.sort_order) : Number.MAX_SAFE_INTEGER;
-
-        if (aOrder !== bOrder) {
-          return aOrder - bOrder;
-        }
-
-        return Number(a.id || 0) - Number(b.id || 0);
+      if (Array.isArray(raw)) {
+        return raw;
       }
 
-      function updateUIState() {
-        const total = state.duas.length;
-        const current = total ? state.index + 1 : 0;
-        indicator.textContent = `${current} / ${total}`;
-
-        const ratio = total ? (current / total) * 100 : 0;
-        progressFill.style.width = `${ratio}%`;
-
-        const active = state.duas[state.index];
-        currentTitle.textContent = active && active.title ? active.title : "No dua selected";
-
-        const slides = track.children;
-        for (let index = 0; index < slides.length; index += 1) {
-          slides[index].setAttribute("aria-hidden", index === state.index ? "false" : "true");
+      if (typeof raw === "string") {
+        try {
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [raw];
+        } catch {
+          return raw
+            .split(",")
+            .map((value) => value.trim())
+            .filter(Boolean);
         }
       }
 
-      function goToSlide(index, animate = true) {
-        const total = state.duas.length;
-        if (!total) {
-          return;
-        }
+      return [];
+    }
 
-        const wrappedIndex = ((index % total) + total) % total;
-        const moved = wrappedIndex !== state.index;
-        state.index = wrappedIndex;
+    function sortDuas(a, b) {
+      const aOrder = Number.isFinite(Number(a.sort_order)) ? Number(a.sort_order) : Number.MAX_SAFE_INTEGER;
+      const bOrder = Number.isFinite(Number(b.sort_order)) ? Number(b.sort_order) : Number.MAX_SAFE_INTEGER;
 
-        track.style.transition = animate ? "transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1)" : "none";
-        track.style.transform = `translateX(-${wrappedIndex * 100}%)`;
-        updateUIState();
-
-        if (moved && navigator.vibrate) {
-          navigator.vibrate(10);
-        }
+      if (aOrder !== bOrder) {
+        return aOrder - bOrder;
       }
 
-      function renderStatus(message, isError = false) {
-        const text = isError
-          ? `<p class=\"value\"><strong>Could not load duas.</strong><br />${escapeHtml(message)}</p>`
-          : `<p class=\"value\">${escapeHtml(message)}</p>`;
+      return Number(a.id || 0) - Number(b.id || 0);
+    }
 
-        track.innerHTML = `
+    function updateUIState() {
+      const total = state.duas.length;
+      const current = total ? state.index + 1 : 0;
+      indicator.textContent = `${current} / ${total}`;
+
+      const ratio = total ? (current / total) * 100 : 0;
+      progressFill.style.width = `${ratio}%`;
+
+      const active = state.duas[state.index];
+      currentTitle.textContent = active && active.title ? active.title : "No dua selected";
+
+      const slides = track.children;
+      for (let index = 0; index < slides.length; index += 1) {
+        slides[index].setAttribute("aria-hidden", index === state.index ? "false" : "true");
+      }
+    }
+
+    function goToSlide(index, animate = true) {
+      const total = state.duas.length;
+      if (!total) {
+        return;
+      }
+
+      const wrappedIndex = ((index % total) + total) % total;
+      const moved = wrappedIndex !== state.index;
+      state.index = wrappedIndex;
+
+      track.style.transition = animate ? "transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1)" : "none";
+      track.style.transform = `translateX(-${wrappedIndex * 100}%)`;
+      updateUIState();
+
+      if (moved && navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    }
+
+    function renderStatus(message, isError = false) {
+      const text = isError
+        ? `<p class=\"value\"><strong>Could not load duas.</strong><br />${escapeHtml(message)}</p>`
+        : `<p class=\"value\">${escapeHtml(message)}</p>`;
+
+      track.innerHTML = `
           <article class="slide" aria-hidden="false">
             <div class="dua-card status-card">${text}</div>
           </article>
         `;
 
-        state.duas = [];
-        state.index = 0;
-        updateUIState();
-      }
+      state.duas = [];
+      state.index = 0;
+      updateUIState();
+    }
 
-      function renderSlides(duas) {
-        const slides = duas.map((dua, index) => {
-          const categories = parseCategories(dua.categories)
-            .map((category) => `<span class="category">${escapeHtml(category)}</span>`)
-            .join("");
+    function renderSlides(duas) {
+      const slides = duas.map((dua, index) => {
+        const categories = parseCategories(dua.categories)
+          .map((category) => `<span class="category">${escapeHtml(category)}</span>`)
+          .join("");
 
-          const contentBlocks = [
-            dua.transliteration
-              ? `
+        const contentBlocks = [
+          dua.transliteration
+            ? `
                 <section class="content-block">
                   <p class="label">Transliteration</p>
                   <p class="value transliteration">${escapeHtml(dua.transliteration)}</p>
                 </section>
               `
-              : "",
-            dua.english_translation
-              ? `
+            : "",
+          dua.english_translation
+            ? `
                 <section class="content-block">
                   <p class="label">Translation</p>
                   <p class="value">${escapeHtml(dua.english_translation)}</p>
                 </section>
               `
-              : "",
-            /*dua.english_meaning
-              ? `
-                <section class="content-block">
-                  <p class="label">Meaning</p>
-                  <p class="value">${escapeHtml(dua.english_meaning)}</p>
-                </section>
-              `
-              : "",*/
-            dua.benefits
-              ? `
+            : "",
+          /*dua.english_meaning
+            ? `
+              <section class="content-block">
+                <p class="label">Meaning</p>
+                <p class="value">${escapeHtml(dua.english_meaning)}</p>
+              </section>
+            `
+            : "",*/
+          dua.benefits
+            ? `
                 <section class="content-block">
                   <p class="label">Benefits</p>
                   <p class="value">${escapeHtml(dua.benefits)}</p>
                 </section>
               `
-              : "",
-          ]
-            .filter(Boolean)
-            .join("");
+            : "",
+        ]
+          .filter(Boolean)
+          .join("");
 
-          const metaItems = [
-            dua.source ? `<div class="meta-item"><strong>Source</strong><span>${escapeHtml(dua.source)}</span></div>` : "",
-            dua.reference ? `<div class="meta-item"><strong>Reference</strong><span>${escapeHtml(dua.reference)}</span></div>` : "",
-            dua.recitation_count !== null && dua.recitation_count !== undefined && dua.recitation_count !== ""
-              ? `<div class="meta-item"><strong>Recitations</strong><span>${escapeHtml(dua.recitation_count)}</span></div>`
-              : "",
-          ]
-            .filter(Boolean)
-            .join("");
+        const metaItems = [
+          dua.source ? `<div class="meta-item"><strong>Source</strong><span>${escapeHtml(dua.source)}</span></div>` : "",
+          dua.reference ? `<div class="meta-item"><strong>Reference</strong><span>${escapeHtml(dua.reference)}</span></div>` : "",
+          dua.recitation_count !== null && dua.recitation_count !== undefined && dua.recitation_count !== ""
+            ? `<div class="meta-item"><strong>Recitations</strong><span>${escapeHtml(dua.recitation_count)}</span></div>`
+            : "",
+        ]
+          .filter(Boolean)
+          .join("");
 
-          return `
+        return `
             <article class="slide" aria-hidden="${index === 0 ? "false" : "true"}" aria-label="Dua ${escapeHtml(dua.id ?? index + 1)}">
               <div class="dua-card" tabindex="0">
                 <div class="dua-header">
                   <div class="dua-badge">Dua #${escapeHtml(dua.id ?? index + 1)}</div>
                   ${dua.recitation_count !== null && dua.recitation_count !== undefined && dua.recitation_count !== ""
-                    ? `<div class="recite-pill">Recite ${escapeHtml(dua.recitation_count)}x</div>`
-                    : ""}
+            ? `<div class="recite-pill">Recite ${escapeHtml(dua.recitation_count)}x</div>`
+            : ""}
                 </div>
 
                 <h2 class="dua-title">${escapeHtml(dua.title || "Untitled Dua")}</h2>
@@ -723,119 +725,120 @@
               </div>
             </article>
           `;
-        });
+      });
 
-        track.innerHTML = slides.join("");
+      track.innerHTML = slides.join("");
+    }
+
+    function shouldTriggerSwipe(deltaX, deltaY) {
+      const horizontal = Math.abs(deltaX);
+      const vertical = Math.abs(deltaY);
+      return horizontal > 58 && horizontal > vertical * 1.2;
+    }
+
+    function handleSwipe(deltaX, deltaY) {
+      if (!shouldTriggerSwipe(deltaX, deltaY)) {
+        return;
       }
 
-      function shouldTriggerSwipe(deltaX, deltaY) {
-        const horizontal = Math.abs(deltaX);
-        const vertical = Math.abs(deltaY);
-        return horizontal > 58 && horizontal > vertical * 1.2;
+      if (deltaX < 0) {
+        goToSlide(state.index + 1);
+      } else {
+        goToSlide(state.index - 1);
       }
+    }
 
-      function handleSwipe(deltaX, deltaY) {
-        if (!shouldTriggerSwipe(deltaX, deltaY)) {
+    function setupInteractions() {
+      viewport.addEventListener(
+        "touchstart",
+        (event) => {
+          const touch = event.touches[0];
+          state.touchStartX = touch.clientX;
+          state.touchStartY = touch.clientY;
+          state.touchActive = true;
+        },
+        { passive: true }
+      );
+
+      viewport.addEventListener(
+        "touchend",
+        (event) => {
+          if (!state.touchActive) {
+            return;
+          }
+
+          const touch = event.changedTouches[0];
+          const deltaX = touch.clientX - state.touchStartX;
+          const deltaY = touch.clientY - state.touchStartY;
+          state.touchActive = false;
+          handleSwipe(deltaX, deltaY);
+        },
+        { passive: true }
+      );
+
+      viewport.addEventListener("pointerdown", (event) => {
+        if (event.pointerType !== "mouse" && event.pointerType !== "pen") {
           return;
         }
 
-        if (deltaX < 0) {
+        state.pointerStartX = event.clientX;
+        state.pointerStartY = event.clientY;
+        state.pointerActive = true;
+        viewport.setPointerCapture(event.pointerId);
+      });
+
+      viewport.addEventListener("pointerup", (event) => {
+        if (!state.pointerActive) {
+          return;
+        }
+
+        state.pointerActive = false;
+        const deltaX = event.clientX - state.pointerStartX;
+        const deltaY = event.clientY - state.pointerStartY;
+        handleSwipe(deltaX, deltaY);
+      });
+
+      viewport.addEventListener("pointercancel", () => {
+        state.pointerActive = false;
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight") {
           goToSlide(state.index + 1);
-        } else {
+        }
+
+        if (event.key === "ArrowLeft") {
           goToSlide(state.index - 1);
         }
-      }
+      });
+    }
 
-      function setupInteractions() {
-        viewport.addEventListener(
-          "touchstart",
-          (event) => {
-            const touch = event.touches[0];
-            state.touchStartX = touch.clientX;
-            state.touchStartY = touch.clientY;
-            state.touchActive = true;
-          },
-          { passive: true }
-        );
+    async function loadDuas() {
+      renderStatus("Loading duas...");
 
-        viewport.addEventListener(
-          "touchend",
-          (event) => {
-            if (!state.touchActive) {
-              return;
-            }
-
-            const touch = event.changedTouches[0];
-            const deltaX = touch.clientX - state.touchStartX;
-            const deltaY = touch.clientY - state.touchStartY;
-            state.touchActive = false;
-            handleSwipe(deltaX, deltaY);
-          },
-          { passive: true }
-        );
-
-        viewport.addEventListener("pointerdown", (event) => {
-          if (event.pointerType !== "mouse" && event.pointerType !== "pen") {
-            return;
-          }
-
-          state.pointerStartX = event.clientX;
-          state.pointerStartY = event.clientY;
-          state.pointerActive = true;
-          viewport.setPointerCapture(event.pointerId);
-        });
-
-        viewport.addEventListener("pointerup", (event) => {
-          if (!state.pointerActive) {
-            return;
-          }
-
-          state.pointerActive = false;
-          const deltaX = event.clientX - state.pointerStartX;
-          const deltaY = event.clientY - state.pointerStartY;
-          handleSwipe(deltaX, deltaY);
-        });
-
-        viewport.addEventListener("pointercancel", () => {
-          state.pointerActive = false;
-        });
-
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "ArrowRight") {
-            goToSlide(state.index + 1);
-          }
-
-          if (event.key === "ArrowLeft") {
-            goToSlide(state.index - 1);
-          }
-        });
-      }
-
-      async function loadDuas() {
-        renderStatus("Loading duas...");
-
-        try {
-          const response = await fetch("./duas.json", { cache: "no-cache" });
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-          }
-
-          const payload = await response.json();
-          if (!Array.isArray(payload) || payload.length === 0) {
-            throw new Error("No dua entries found in duas.json.");
-          }
-
-          state.duas = payload.slice().sort(sortDuas);
-          renderSlides(state.duas);
-          goToSlide(0, false);
-        } catch (error) {
-          const message = error instanceof Error ? error.message : "Unknown error while loading duas.";
-          renderStatus(message, true);
+      try {
+        const response = await fetch("./duas.json", { cache: "no-cache" });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
         }
-      }
 
-      setupInteractions();
-      loadDuas();
-    </script>
-  </body>
+        const payload = await response.json();
+        if (!Array.isArray(payload) || payload.length === 0) {
+          throw new Error("No dua entries found in duas.json.");
+        }
+
+        state.duas = payload.slice().sort(sortDuas);
+        renderSlides(state.duas);
+        goToSlide(0, false);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Unknown error while loading duas.";
+        renderStatus(message, true);
+      }
+    }
+
+    setupInteractions();
+    loadDuas();
+  </script>
+</body>
+
 </html>
