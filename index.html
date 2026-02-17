@@ -49,6 +49,7 @@
       body {
         font-family: "Sora", "Segoe UI", sans-serif;
         color: var(--text);
+        overflow: hidden;
         background:
           radial-gradient(1000px 580px at -12% -22%, rgba(13, 110, 87, 0.22), transparent 56%),
           radial-gradient(760px 540px at 112% -14%, rgba(177, 133, 69, 0.18), transparent 55%),
@@ -64,6 +65,7 @@
       }
 
       .app {
+        height: 100dvh;
         min-height: 100svh;
         max-width: 980px;
         margin: 0 auto;
@@ -71,6 +73,7 @@
         display: grid;
         grid-template-rows: auto 1fr auto;
         gap: clamp(10px, 2vw, 16px);
+        overflow: hidden;
         animation: app-in 500ms ease-out;
       }
 
@@ -139,12 +142,14 @@
       .app-main {
         min-height: 0;
         display: grid;
-        grid-template-rows: 1fr auto;
+        grid-template-rows: minmax(0, 1fr) auto;
         gap: 10px;
       }
 
       .carousel-frame {
         min-height: 0;
+        height: 100%;
+        max-height: 100%;
         overflow: hidden;
         border-radius: calc(var(--radius-lg) + 2px);
         border: 1px solid rgba(13, 110, 87, 0.16);
@@ -183,6 +188,7 @@
           linear-gradient(180deg, var(--surface), var(--surface-soft)),
           repeating-linear-gradient(45deg, rgba(13, 110, 87, 0.02) 0 12px, transparent 12px 32px);
         overflow-y: auto;
+        overscroll-behavior: contain;
         scrollbar-width: thin;
         scrollbar-color: rgba(13, 110, 87, 0.4) transparent;
       }
@@ -438,7 +444,7 @@
             <div class="brand-mark" aria-hidden="true">D</div>
             <div>
               <h1>Daily Duas</h1>
-              <p>Reflect, recite, and swipe through your collection.</p>
+              <p>Swipe through the daily duas</p>
             </div>
           </div>
           <div class="hint-pill">Swipe left or right</div>
@@ -467,7 +473,7 @@
         </section>
       </main>
 
-      <footer class="app-footer">Powered by local <code>duas.json</code> data.</footer>
+      <!-- <footer class="app-footer">Powered by local <code>duas.json</code> data.</footer> -->
     </div>
 
     <script>
@@ -607,14 +613,14 @@
                 </section>
               `
               : "",
-            dua.english_meaning
+            /*dua.english_meaning
               ? `
                 <section class="content-block">
                   <p class="label">Meaning</p>
                   <p class="value">${escapeHtml(dua.english_meaning)}</p>
                 </section>
               `
-              : "",
+              : "",*/
             dua.benefits
               ? `
                 <section class="content-block">
@@ -633,7 +639,6 @@
             dua.recitation_count !== null && dua.recitation_count !== undefined && dua.recitation_count !== ""
               ? `<div class="meta-item"><strong>Recitations</strong><span>${escapeHtml(dua.recitation_count)}</span></div>`
               : "",
-            dua.updated_at ? `<div class="meta-item"><strong>Updated</strong><span>${escapeHtml(dua.updated_at)}</span></div>` : "",
           ]
             .filter(Boolean)
             .join("");
