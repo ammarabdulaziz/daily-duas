@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#1f7a5b" />
-    <meta name="description" content="Daily Duas carousel with Arabic text, transliteration, and meanings." />
+    <meta name="theme-color" content="#0d6e57" />
+    <meta name="description" content="Daily duas in a modern swipeable carousel." />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Daily Duas" />
@@ -13,21 +13,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;600;700&family=Sora:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
     <style>
       :root {
-        --bg: #f5f2e9;
-        --surface: #fffdf7;
-        --surface-soft: #eef6ef;
-        --line: #d8e3d7;
-        --text: #213026;
-        --muted: #5a6a5d;
-        --accent: #1f7a5b;
-        --accent-soft: #d7ece2;
-        --shadow: 0 18px 40px rgba(21, 47, 35, 0.12);
+        --bg: #f7f4eb;
+        --surface: #fffdf8;
+        --surface-soft: #f4f9f6;
+        --line: #d7e4dc;
+        --text: #1a2a24;
+        --muted: #5d6f66;
+        --brand: #0d6e57;
+        --brand-strong: #085645;
+        --brand-soft: #d8ece4;
+        --accent: #b18545;
+        --warn: #8e3030;
+        --radius-lg: 24px;
+        --radius-md: 18px;
+        --radius-sm: 12px;
+        --shadow-soft: 0 18px 38px rgba(14, 42, 33, 0.12);
       }
 
       * {
@@ -41,77 +47,121 @@
       }
 
       body {
-        font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-family: "Sora", "Segoe UI", sans-serif;
         color: var(--text);
         background:
-          radial-gradient(1400px 540px at -8% -18%, rgba(31, 122, 91, 0.16), transparent 58%),
-          radial-gradient(900px 450px at 110% 6%, rgba(196, 152, 69, 0.14), transparent 60%),
-          repeating-linear-gradient(
-            45deg,
-            rgba(31, 122, 91, 0.04) 0,
-            rgba(31, 122, 91, 0.04) 10px,
-            transparent 10px,
-            transparent 34px
+          radial-gradient(1000px 580px at -12% -22%, rgba(13, 110, 87, 0.22), transparent 56%),
+          radial-gradient(760px 540px at 112% -14%, rgba(177, 133, 69, 0.18), transparent 55%),
+          conic-gradient(
+            from 140deg at 22% 14%,
+            rgba(13, 110, 87, 0.06),
+            rgba(13, 110, 87, 0),
+            rgba(177, 133, 69, 0.06),
+            rgba(13, 110, 87, 0.04),
+            rgba(13, 110, 87, 0.06)
           ),
           var(--bg);
       }
 
       .app {
         min-height: 100svh;
-        max-width: 960px;
+        max-width: 980px;
         margin: 0 auto;
-        padding: clamp(12px, 2.5vw, 24px);
+        padding: clamp(12px, 2vw, 20px);
         display: grid;
         grid-template-rows: auto 1fr auto;
         gap: clamp(10px, 2vw, 16px);
+        animation: app-in 500ms ease-out;
       }
 
       .app-header {
-        padding: clamp(10px, 2vw, 18px);
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(238, 246, 239, 0.9));
-        backdrop-filter: blur(1px);
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(238, 247, 241, 0.8)),
+          linear-gradient(180deg, rgba(13, 110, 87, 0.06), rgba(177, 133, 69, 0.06));
+        backdrop-filter: blur(8px);
+        box-shadow: var(--shadow-soft);
+        padding: clamp(14px, 2.4vw, 20px);
       }
 
-      .app-header h1 {
+      .brand-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(160deg, var(--brand), var(--brand-strong));
+        color: #fff;
+        box-shadow: 0 10px 20px rgba(8, 86, 69, 0.25);
+        font-weight: 700;
+      }
+
+      .brand h1 {
         margin: 0;
-        font-size: clamp(1.25rem, 2.4vw, 1.7rem);
-        line-height: 1.15;
+        font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+        letter-spacing: 0.01em;
       }
 
-      .app-header p {
-        margin: 4px 0 0;
+      .brand p {
+        margin: 2px 0 0;
         color: var(--muted);
-        font-size: clamp(0.86rem, 1.9vw, 0.96rem);
+        font-size: clamp(0.78rem, 1.8vw, 0.9rem);
       }
 
-      .carousel-shell {
+      .hint-pill {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(13, 110, 87, 0.22);
+        color: var(--brand-strong);
+        font-size: 0.77rem;
+        font-weight: 600;
+        background: rgba(216, 236, 228, 0.6);
+      }
+
+      .app-main {
         min-height: 0;
         display: grid;
         grid-template-rows: 1fr auto;
-        gap: 8px;
+        gap: 10px;
       }
 
-      .carousel-viewport {
+      .carousel-frame {
         min-height: 0;
         overflow: hidden;
-        border-radius: 20px;
-        border: 1px solid var(--line);
-        background: var(--surface);
-        box-shadow: var(--shadow);
+        border-radius: calc(var(--radius-lg) + 2px);
+        border: 1px solid rgba(13, 110, 87, 0.16);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(244, 249, 246, 0.9));
+        box-shadow: var(--shadow-soft);
         touch-action: pan-y;
         cursor: grab;
       }
 
-      .carousel-viewport:active {
+      .carousel-frame:active {
         cursor: grabbing;
       }
 
       .carousel-track {
         height: 100%;
         display: flex;
-        transition: transform 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
+        transition: transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1);
         will-change: transform;
       }
 
@@ -123,71 +173,111 @@
       }
 
       .dua-card {
-        width: min(760px, 100%);
+        width: min(780px, 100%);
+        height: 100%;
         margin: 0 auto;
-        border-radius: 16px;
+        padding: clamp(14px, 2.8vw, 22px);
+        border-radius: var(--radius-md);
         border: 1px solid var(--line);
-        background: linear-gradient(180deg, var(--surface) 0%, var(--surface-soft) 100%);
-        padding: clamp(14px, 3vw, 22px);
+        background:
+          linear-gradient(180deg, var(--surface), var(--surface-soft)),
+          repeating-linear-gradient(45deg, rgba(13, 110, 87, 0.02) 0 12px, transparent 12px 32px);
         overflow-y: auto;
-        max-height: 100%;
-        scroll-behavior: smooth;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(13, 110, 87, 0.4) transparent;
       }
 
-      .dua-top {
+      .dua-card:focus-visible {
+        outline: 2px solid rgba(13, 110, 87, 0.35);
+        outline-offset: 2px;
+      }
+
+      .dua-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 10px;
+        flex-wrap: wrap;
       }
 
-      .dua-id {
+      .dua-badge {
         display: inline-flex;
         align-items: center;
-        padding: 4px 10px;
+        gap: 8px;
+        padding: 5px 10px;
         border-radius: 999px;
-        border: 1px solid var(--accent-soft);
-        background: #f6fbf8;
-        color: var(--accent);
+        border: 1px solid rgba(13, 110, 87, 0.2);
+        background: rgba(216, 236, 228, 0.56);
+        color: var(--brand-strong);
         font-weight: 700;
-        font-size: 0.8rem;
+        font-size: 0.79rem;
+      }
+
+      .recite-pill {
+        padding: 5px 9px;
+        border-radius: 999px;
+        border: 1px solid rgba(177, 133, 69, 0.35);
+        background: rgba(177, 133, 69, 0.15);
+        color: #6b4d22;
+        font-size: 0.74rem;
+        font-weight: 600;
       }
 
       .dua-title {
         margin: 10px 0 0;
-        font-size: clamp(1.05rem, 2.5vw, 1.32rem);
-        line-height: 1.35;
+        font-size: clamp(1.05rem, 2.3vw, 1.34rem);
+        line-height: 1.34;
+      }
+
+      .arabic-wrap {
+        margin-top: 14px;
+        padding: clamp(12px, 2vw, 16px);
+        border-radius: 14px;
+        border: 1px solid rgba(13, 110, 87, 0.15);
+        background:
+          radial-gradient(circle at top right, rgba(177, 133, 69, 0.14), transparent 55%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(243, 248, 244, 0.84));
       }
 
       .arabic {
-        margin: 14px 0 0;
+        margin: 0;
         direction: rtl;
         text-align: right;
         font-family: "Noto Naskh Arabic", serif;
-        font-size: clamp(1.45rem, 4vw, 2rem);
-        line-height: 1.9;
-        color: #0f3528;
+        font-size: clamp(1.5rem, 4.2vw, 2.1rem);
+        line-height: 1.82;
+        color: #12372c;
       }
 
-      .section {
+      .content-grid {
         margin-top: 12px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .content-block {
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.7);
       }
 
       .label {
         margin: 0;
-        font-size: 0.73rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: #537563;
+        letter-spacing: 0.08em;
+        font-size: 0.69rem;
+        font-weight: 700;
+        color: #567567;
       }
 
       .value {
-        margin: 4px 0 0;
+        margin: 5px 0 0;
         line-height: 1.58;
+        font-size: clamp(0.88rem, 1.8vw, 0.96rem);
       }
 
-      .transliteration {
+      .value.transliteration {
         font-style: italic;
       }
 
@@ -195,76 +285,146 @@
         margin-top: 12px;
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 7px;
       }
 
       .category {
         display: inline-flex;
         align-items: center;
-        padding: 4px 9px;
+        padding: 5px 9px;
         border-radius: 999px;
-        background: var(--accent-soft);
-        color: #165d44;
-        font-size: 0.79rem;
+        background: var(--brand-soft);
+        color: var(--brand-strong);
+        border: 1px solid rgba(13, 110, 87, 0.2);
+        font-size: 0.74rem;
         font-weight: 600;
       }
 
       .meta-grid {
         margin-top: 12px;
         display: grid;
+        gap: 8px;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
       }
 
       .meta-item {
-        padding: 10px;
-        border-radius: 10px;
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.7);
+        border-radius: 10px;
+        padding: 9px 10px;
+        background: rgba(255, 255, 255, 0.75);
       }
 
       .meta-item strong {
         display: block;
-        font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.07em;
-        color: #547767;
+        font-size: 0.66rem;
+        color: #557466;
       }
 
       .meta-item span {
         display: block;
         margin-top: 4px;
-        font-size: 0.92rem;
+        font-size: 0.86rem;
+      }
+
+      .pager {
+        display: grid;
+        gap: 8px;
+        border-radius: 16px;
+        border: 1px solid rgba(13, 110, 87, 0.14);
+        background: rgba(255, 255, 255, 0.72);
+        padding: 10px;
+      }
+
+      .progress-rail {
+        position: relative;
+        height: 8px;
+        border-radius: 999px;
+        overflow: hidden;
+        background: rgba(13, 110, 87, 0.14);
+      }
+
+      .progress-fill {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--brand), #19916f 70%, var(--accent));
+        transition: width 240ms ease;
+      }
+
+      .pager-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
       }
 
       .indicator {
-        text-align: center;
+        font-size: 0.88rem;
         color: var(--muted);
-        font-size: 0.9rem;
         font-weight: 600;
+      }
+
+      .current-title {
+        font-size: 0.78rem;
+        color: #4f5f58;
+        text-align: right;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 70%;
       }
 
       .app-footer {
         text-align: center;
+        font-size: 0.76rem;
         color: var(--muted);
-        font-size: 0.8rem;
-        padding: 3px 0 1px;
       }
 
       .status-card {
         width: min(700px, 100%);
         margin: auto;
-        padding: 20px;
         text-align: center;
       }
 
       .status-card strong {
-        color: #a83939;
+        color: var(--warn);
       }
 
-      @media (max-width: 680px) {
+      @media (max-width: 760px) {
         .meta-grid {
           grid-template-columns: 1fr;
+        }
+
+        .hint-pill {
+          display: none;
+        }
+
+        .current-title {
+          max-width: 62%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      @keyframes app-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
       }
     </style>
@@ -273,12 +433,20 @@
   <body>
     <div class="app">
       <header class="app-header">
-        <h1>Daily Duas</h1>
-        <p>Swipe left or right to move between duas.</p>
+        <div class="brand-row">
+          <div class="brand">
+            <div class="brand-mark" aria-hidden="true">D</div>
+            <div>
+              <h1>Daily Duas</h1>
+              <p>Reflect, recite, and swipe through your collection.</p>
+            </div>
+          </div>
+          <div class="hint-pill">Swipe left or right</div>
+        </div>
       </header>
 
-      <main class="carousel-shell" aria-live="polite">
-        <section class="carousel-viewport" id="carouselViewport">
+      <main class="app-main" aria-live="polite">
+        <section class="carousel-frame" id="carouselViewport" aria-label="Duas carousel">
           <div class="carousel-track" id="carouselTrack">
             <article class="slide">
               <div class="dua-card status-card">
@@ -287,16 +455,27 @@
             </article>
           </div>
         </section>
-        <div class="indicator" id="slideIndicator">0 / 0</div>
+
+        <section class="pager" aria-label="Slide progress">
+          <div class="progress-rail">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="pager-row">
+            <div class="indicator" id="slideIndicator">0 / 0</div>
+            <div class="current-title" id="currentTitle">Waiting for duas...</div>
+          </div>
+        </section>
       </main>
 
-      <footer class="app-footer">Brought from your local <code>duas.json</code> file.</footer>
+      <footer class="app-footer">Powered by local <code>duas.json</code> data.</footer>
     </div>
 
     <script>
       const track = document.getElementById("carouselTrack");
       const viewport = document.getElementById("carouselViewport");
       const indicator = document.getElementById("slideIndicator");
+      const currentTitle = document.getElementById("currentTitle");
+      const progressFill = document.getElementById("progressFill");
 
       const state = {
         duas: [],
@@ -334,7 +513,7 @@
           } catch {
             return raw
               .split(",")
-              .map((item) => item.trim())
+              .map((value) => value.trim())
               .filter(Boolean);
           }
         }
@@ -353,10 +532,21 @@
         return Number(a.id || 0) - Number(b.id || 0);
       }
 
-      function updateIndicator() {
+      function updateUIState() {
         const total = state.duas.length;
         const current = total ? state.index + 1 : 0;
         indicator.textContent = `${current} / ${total}`;
+
+        const ratio = total ? (current / total) * 100 : 0;
+        progressFill.style.width = `${ratio}%`;
+
+        const active = state.duas[state.index];
+        currentTitle.textContent = active && active.title ? active.title : "No dua selected";
+
+        const slides = track.children;
+        for (let index = 0; index < slides.length; index += 1) {
+          slides[index].setAttribute("aria-hidden", index === state.index ? "false" : "true");
+        }
       }
 
       function goToSlide(index, animate = true) {
@@ -365,12 +555,17 @@
           return;
         }
 
-        const wrapped = ((index % total) + total) % total;
-        state.index = wrapped;
+        const wrappedIndex = ((index % total) + total) % total;
+        const moved = wrappedIndex !== state.index;
+        state.index = wrappedIndex;
 
-        track.style.transition = animate ? "transform 320ms cubic-bezier(0.2, 0.6, 0.2, 1)" : "none";
-        track.style.transform = `translateX(-${wrapped * 100}%)`;
-        updateIndicator();
+        track.style.transition = animate ? "transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1)" : "none";
+        track.style.transform = `translateX(-${wrappedIndex * 100}%)`;
+        updateUIState();
+
+        if (moved && navigator.vibrate) {
+          navigator.vibrate(10);
+        }
       }
 
       function renderStatus(message, isError = false) {
@@ -379,22 +574,57 @@
           : `<p class=\"value\">${escapeHtml(message)}</p>`;
 
         track.innerHTML = `
-          <article class="slide">
-            <div class="dua-card status-card">
-              ${text}
-            </div>
+          <article class="slide" aria-hidden="false">
+            <div class="dua-card status-card">${text}</div>
           </article>
         `;
 
         state.duas = [];
         state.index = 0;
-        updateIndicator();
+        updateUIState();
       }
 
       function renderSlides(duas) {
-        const fragments = duas.map((dua) => {
+        const slides = duas.map((dua, index) => {
           const categories = parseCategories(dua.categories)
             .map((category) => `<span class="category">${escapeHtml(category)}</span>`)
+            .join("");
+
+          const contentBlocks = [
+            dua.transliteration
+              ? `
+                <section class="content-block">
+                  <p class="label">Transliteration</p>
+                  <p class="value transliteration">${escapeHtml(dua.transliteration)}</p>
+                </section>
+              `
+              : "",
+            dua.english_translation
+              ? `
+                <section class="content-block">
+                  <p class="label">Translation</p>
+                  <p class="value">${escapeHtml(dua.english_translation)}</p>
+                </section>
+              `
+              : "",
+            dua.english_meaning
+              ? `
+                <section class="content-block">
+                  <p class="label">Meaning</p>
+                  <p class="value">${escapeHtml(dua.english_meaning)}</p>
+                </section>
+              `
+              : "",
+            dua.benefits
+              ? `
+                <section class="content-block">
+                  <p class="label">Benefits</p>
+                  <p class="value">${escapeHtml(dua.benefits)}</p>
+                </section>
+              `
+              : "",
+          ]
+            .filter(Boolean)
             .join("");
 
           const metaItems = [
@@ -403,62 +633,40 @@
             dua.recitation_count !== null && dua.recitation_count !== undefined && dua.recitation_count !== ""
               ? `<div class="meta-item"><strong>Recitations</strong><span>${escapeHtml(dua.recitation_count)}</span></div>`
               : "",
-          ].filter(Boolean);
+            dua.updated_at ? `<div class="meta-item"><strong>Updated</strong><span>${escapeHtml(dua.updated_at)}</span></div>` : "",
+          ]
+            .filter(Boolean)
+            .join("");
 
           return `
-            <article class="slide" aria-label="Dua ${escapeHtml(dua.id ?? "")}">
+            <article class="slide" aria-hidden="${index === 0 ? "false" : "true"}" aria-label="Dua ${escapeHtml(dua.id ?? index + 1)}">
               <div class="dua-card" tabindex="0">
-                <div class="dua-top">
-                  <span class="dua-id">Dua #${escapeHtml(dua.id ?? "-")}</span>
+                <div class="dua-header">
+                  <div class="dua-badge">Dua #${escapeHtml(dua.id ?? index + 1)}</div>
+                  ${dua.recitation_count !== null && dua.recitation_count !== undefined && dua.recitation_count !== ""
+                    ? `<div class="recite-pill">Recite ${escapeHtml(dua.recitation_count)}x</div>`
+                    : ""}
                 </div>
 
                 <h2 class="dua-title">${escapeHtml(dua.title || "Untitled Dua")}</h2>
 
-                ${dua.arabic_text ? `<p class="arabic">${escapeHtml(dua.arabic_text)}</p>` : ""}
+                ${dua.arabic_text ? `<section class="arabic-wrap"><p class="arabic">${escapeHtml(dua.arabic_text)}</p></section>` : ""}
 
-                ${dua.transliteration ? `
-                  <section class="section">
-                    <p class="label">Transliteration</p>
-                    <p class="value transliteration">${escapeHtml(dua.transliteration)}</p>
-                  </section>
-                ` : ""}
-
-                ${dua.english_translation ? `
-                  <section class="section">
-                    <p class="label">Translation</p>
-                    <p class="value">${escapeHtml(dua.english_translation)}</p>
-                  </section>
-                ` : ""}
-
-                ${dua.english_meaning ? `
-                  <section class="section">
-                    <p class="label">Meaning</p>
-                    <p class="value">${escapeHtml(dua.english_meaning)}</p>
-                  </section>
-                ` : ""}
-
-                ${dua.benefits ? `
-                  <section class="section">
-                    <p class="label">Benefits</p>
-                    <p class="value">${escapeHtml(dua.benefits)}</p>
-                  </section>
-                ` : ""}
-
+                ${contentBlocks ? `<div class="content-grid">${contentBlocks}</div>` : ""}
                 ${categories ? `<div class="categories">${categories}</div>` : ""}
-
-                ${metaItems.length ? `<div class="meta-grid">${metaItems.join("")}</div>` : ""}
+                ${metaItems ? `<div class="meta-grid">${metaItems}</div>` : ""}
               </div>
             </article>
           `;
         });
 
-        track.innerHTML = fragments.join("");
+        track.innerHTML = slides.join("");
       }
 
       function shouldTriggerSwipe(deltaX, deltaY) {
-        const horizontalDistance = Math.abs(deltaX);
-        const verticalDistance = Math.abs(deltaY);
-        return horizontalDistance > 56 && horizontalDistance > verticalDistance * 1.2;
+        const horizontal = Math.abs(deltaX);
+        const vertical = Math.abs(deltaY);
+        return horizontal > 58 && horizontal > vertical * 1.2;
       }
 
       function handleSwipe(deltaX, deltaY) {
@@ -474,25 +682,32 @@
       }
 
       function setupInteractions() {
-        viewport.addEventListener("touchstart", (event) => {
-          const touch = event.touches[0];
-          state.touchStartX = touch.clientX;
-          state.touchStartY = touch.clientY;
-          state.touchActive = true;
-        }, { passive: true });
+        viewport.addEventListener(
+          "touchstart",
+          (event) => {
+            const touch = event.touches[0];
+            state.touchStartX = touch.clientX;
+            state.touchStartY = touch.clientY;
+            state.touchActive = true;
+          },
+          { passive: true }
+        );
 
-        viewport.addEventListener("touchend", (event) => {
-          if (!state.touchActive) {
-            return;
-          }
+        viewport.addEventListener(
+          "touchend",
+          (event) => {
+            if (!state.touchActive) {
+              return;
+            }
 
-          const touch = event.changedTouches[0];
-          const deltaX = touch.clientX - state.touchStartX;
-          const deltaY = touch.clientY - state.touchStartY;
-          state.touchActive = false;
-
-          handleSwipe(deltaX, deltaY);
-        }, { passive: true });
+            const touch = event.changedTouches[0];
+            const deltaX = touch.clientX - state.touchStartX;
+            const deltaY = touch.clientY - state.touchStartY;
+            state.touchActive = false;
+            handleSwipe(deltaX, deltaY);
+          },
+          { passive: true }
+        );
 
         viewport.addEventListener("pointerdown", (event) => {
           if (event.pointerType !== "mouse" && event.pointerType !== "pen") {
@@ -549,7 +764,7 @@
           renderSlides(state.duas);
           goToSlide(0, false);
         } catch (error) {
-          const message = error instanceof Error ? error.message : "Unknown error while loading data.";
+          const message = error instanceof Error ? error.message : "Unknown error while loading duas.";
           renderStatus(message, true);
         }
       }
