@@ -189,8 +189,14 @@
           repeating-linear-gradient(45deg, rgba(13, 110, 87, 0.02) 0 12px, transparent 12px 32px);
         overflow-y: auto;
         overscroll-behavior: contain;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(13, 110, 87, 0.4) transparent;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .dua-card::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        display: none;
       }
 
       .dua-card:focus-visible {
