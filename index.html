@@ -535,9 +535,10 @@
       </section>
     </main>
 
-    <!-- <footer class="app-footer">Powered by local <code>duas.json</code> data.</footer> -->
+    <footer class="app-footer" id="offlineStatus" role="status">Preparing offline access...</footer>
   </div>
 
+  <script src="./offline-data.js"></script>
   <script>
     const track = document.getElementById("carouselTrack");
     const viewport = document.getElementById("carouselViewport");
@@ -813,31 +814,89 @@
       });
     }
 
-    async function loadDuas() {
-      renderStatus("Loading duas...");
+    const offlineStatus = document.getElementById("offlineStatus");
+    let refreshInFlight = null;
+    let lastPayload = "";
+    let offlineReady = false;
 
+    function showDuas(payload) {
+      const serialized = JSON.stringify(payload);
+      if (serialized === lastPayload) return;
+      const previous = state.duas[state.index];
+      const previousIndex = state.index;
+      const scrollTop = track.children[state.index]?.querySelector(".dua-card")?.scrollTop || 0;
+      state.duas = payload.slice().sort(sortDuas);
+      const retainedIndex = previous?.id != null
+        ? state.duas.findIndex((dua) => dua.id === previous.id) : -1;
+      state.index = retainedIndex >= 0 ? retainedIndex : Math.min(previousIndex, state.duas.length - 1);
+      renderSlides(state.duas);
+      goToSlide(state.index, false);
+      track.children[state.index].querySelector(".dua-card").scrollTop = scrollTop;
+      lastPayload = serialized;
+    }
+
+    async function updateOfflineStatus() {
+      offlineReady = Boolean(navigator.serviceWorker?.controller && await DailyDuasOffline.read());
+      offlineStatus.textContent = !navigator.onLine && state.duas.length
+        ? "Offline: using saved duas"
+        : offlineReady ? "Available offline" : "Offline access is not ready yet";
+    }
+
+    function refreshDuas() {
+      if (refreshInFlight) return refreshInFlight;
+      refreshInFlight = (async () => {
+        try {
+          const { payload, saved } = await DailyDuasOffline.download();
+          showDuas(payload);
+          await updateOfflineStatus();
+          if (!saved) offlineStatus.textContent = "Duas loaded; offline storage is unavailable";
+        } catch (error) {
+          if (!state.duas.length) {
+            renderStatus("Connect to the internet once to save the duas for offline use.", true);
+          }
+          offlineStatus.textContent = state.duas.length
+            ? (!navigator.onLine ? "Offline: using saved duas" : "Update unavailable: using saved duas")
+            : "No saved duas yet";
+        } finally {
+          refreshInFlight = null;
+        }
+      })();
+      return refreshInFlight;
+    }
+
+    async function setupOffline() {
+      if (!("serviceWorker" in navigator)) {
+        offlineStatus.textContent = "This browser does not support offline access";
+        return;
+      }
+      navigator.serviceWorker.addEventListener("controllerchange", updateOfflineStatus);
       try {
-        const response = await fetch("./duas.json", { cache: "no-cache" });
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        const payload = await response.json();
-        if (!Array.isArray(payload) || payload.length === 0) {
-          throw new Error("No dua entries found in duas.json.");
-        }
-
-        state.duas = payload.slice().sort(sortDuas);
-        renderSlides(state.duas);
-        goToSlide(0, false);
-      } catch (error) {
-        const message = error instanceof Error ? error.message : "Unknown error while loading duas.";
-        renderStatus(message, true);
+        await navigator.serviceWorker.register("./sw.js", { scope: "./", updateViaCache: "none" });
+        await navigator.serviceWorker.ready;
+        await updateOfflineStatus();
+      } catch {
+        offlineStatus.textContent = "Offline access is unavailable; online reading still works";
       }
     }
 
+    async function loadDuas() {
+      const saved = await DailyDuasOffline.read();
+      if (saved) showDuas(saved);
+      await refreshDuas();
+    }
+
     setupInteractions();
+    setupOffline();
     loadDuas();
+    window.addEventListener("online", refreshDuas);
+    window.addEventListener("offline", updateOfflineStatus);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") refreshDuas();
+    });
+    // Also pick up edits during a long reading session, without resetting slides.
+    setInterval(() => {
+      if (document.visibilityState === "visible" && navigator.onLine) refreshDuas();
+    }, 60000);
   </script>
 </body>
 
